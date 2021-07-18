@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Shortly App</string>
+    <string name="image">image</string>
+    <string name="title_get_started">Let’s get started!</string>
+    <string name="msg_get_started">Paste your first link into the field to shorten it</string>
+    <string name="msg_shorten_a_link_here">Shorten a link here ...</string>
+    <string name="msg_shorten_it">SHORTEN IT!</string>
+    <string name="copy">COPY</string>
+    <string name="title_link_history">Your Link History</string>
 </resources>
