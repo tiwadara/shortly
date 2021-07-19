@@ -7,12 +7,10 @@ import com.tiwa.common.DummyData
 import com.tiwa.common.DummyData.apiResponseObj
 import com.tiwa.common.data.api.ShortLinkService
 import com.tiwa.common.data.dao.ShortLinkDao
-import com.tiwa.common.data.model.ApiResponse
-import com.tiwa.common.data.model.ShortLinkData
+import com.tiwa.common.data.state.ShortLinkState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -41,43 +39,13 @@ class ShortLinkRepositoryImplTest {
 
     }
 
-    @After
-    fun tearDown() {
-    }
-
     @Test
     fun getNewShortLink_returns_Success() {
         runBlockingTest {
             whenever(shortLinkService.getShortLinks(testData.url)).thenReturn(apiResponseObj)
-            val result = shortLinkService.getShortLinks(testData.url)
-            assertEquals(result ,apiResponseObj )
-        }
-    }
-
-    @Test
-    fun `getNewShortLink returns error on null or empty`() {
-        runBlockingTest {
-            whenever(shortLinkService.getShortLinks(testData.url)).thenReturn(apiResponseObj)
-            val result = shortLinkService.getShortLinks(testData.url)
-            assertEquals(result ,apiResponseObj )
-        }
-    }
-
-    @Test
-    fun `loadSavedShortLinks_returns_list of saved links`() {
-        runBlockingTest {
-            whenever(shortLinkService.getShortLinks(testData.url)).thenReturn(apiResponseObj)
-            val result = shortLinkService.getShortLinks(testData.url)
-            assertEquals(result ,apiResponseObj )
-        }
-    }
-
-    @Test
-    fun `deleteSavedShortLink_removes an item from list of saved links`() {
-        runBlockingTest {
-            whenever(shortLinkService.getShortLinks(testData.url)).thenReturn(apiResponseObj)
-            val result = shortLinkService.getShortLinks(testData.url)
-            assertEquals(result ,apiResponseObj )
-        }
+            val result = shortLinkRepository.getNewShortLink(testData.url)
+                assertEquals(result.first() ,ShortLinkState.Loading )
+                assertEquals(result.count() , 2 )
+            }
     }
 }
