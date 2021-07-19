@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:layout_marginBottom="@dimen/space_200"
     tools:showIn="@layout/activity_home">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/space_20"

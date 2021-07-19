@@ -8,12 +8,14 @@
     tools:context=".ui.home.HomeActivity">
 
     <include
+        android:id="@+id/layout_create_short_link"
         layout="@layout/layout_create_short_link"
-        tools:visibility="gone" />
+        tools:visibility="visible" />
 
     <include
+        android:id="@+id/layout_history"
         layout="@layout/layout_history"
-        tools:visibility="visible" />
+        android:visibility="gone" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_bottom_view"
@@ -33,10 +35,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:indeterminate="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/edit_text_short_link"
         android:layout_width="0dp"
         android:layout_height="@dimen/space_49"
         android:layout_marginStart="@dimen/space_48"
@@ -65,8 +77,8 @@
         android:fontFamily="@font/poppins_bold"
         android:text="@string/msg_shorten_it"
         app:backgroundTint="@color/accent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintEnd_toEndOf="@+id/edit_text_short_link"
+        app:layout_constraintStart_toStartOf="@+id/edit_text_short_link"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_short_link" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

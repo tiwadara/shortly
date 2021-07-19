@@ -16,7 +16,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="@dimen/space_8"
             app:cardElevation="0dp" />
 
     </FrameLayout>
@@ -34,7 +34,7 @@
         android:maxLines="2"
         android:textColor="@color/text_color"
         android:textSize="@dimen/text_17"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/button_delete"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="https://www.spiegel.de/sie..." />
@@ -52,14 +52,14 @@
         android:textColor="@color/accent"
         android:textSize="@dimen/text_17"
         android:textStyle="bold"
-        app:elevation="2dp"
+        app:elevation="@dimen/space_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         tools:text="https://rel.ink/k4|Kyk" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/space_23"
@@ -74,15 +74,15 @@
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="@dimen/space_1"
+        android:layout_marginTop="@dimen/space_12"
         android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintTop_toBottomOf="@+id/button_delete" />
 
     <Button
-        android:id="@+id/button_shorten"
+        android:id="@+id/button_copy"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/space_49"
         android:layout_marginTop="@dimen/space_23"
         android:layout_marginBottom="@dimen/space_23"
         android:fontFamily="@font/poppins_bold"
@@ -93,7 +93,6 @@
         app:layout_constraintEnd_toEndOf="@+id/text_new_link"
         app:layout_constraintStart_toStartOf="@+id/text_new_link"
         app:layout_constraintTop_toBottomOf="@+id/text_new_link" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
