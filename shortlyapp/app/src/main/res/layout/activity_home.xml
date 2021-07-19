@@ -10,7 +10,7 @@
     <include
         android:id="@+id/layout_create_short_link"
         layout="@layout/layout_create_short_link"
-        tools:visibility="visible" />
+        android:visibility="gone" />
 
     <include
         android:id="@+id/layout_history"
