@@ -1,55 +1,59 @@
-package com.tiwa.movies.ui.movies
+package com.tiwa.shortlyapp.ui.history
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tiwa.common.model.Movie
-import com.tiwa.common.repository.MovieRepositoryImpl
-import com.tiwa.common.util.Status
+import com.tiwa.common.data.event.ShortLinkEvent
+import com.tiwa.common.data.repository.ShortLinkRepositoryImpl
+import com.tiwa.common.data.state.ShortLinkState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.properties.ObservableProperty
 
 @HiltViewModel
-class MovieViewModel @Inject constructor( private val repository: MovieRepositoryImpl): ViewModel() {
+class HistoryViewModel @Inject constructor(private val repository: ShortLinkRepositoryImpl): ViewModel() {
 
-    private var movieList: LiveData<List<Movie>> = repository.getMovieList()
-    private var isLoading: LiveData<Boolean> = repository.isLoading()
-    private val itemClicked = MutableLiveData<Int>()
-    val initialMovieId = -1
+    private val eventChannel = Channel<ShortLinkEvent>(Channel.UNLIMITED)
+    private val _state = MutableStateFlow<ShortLinkState<Any>>(ShortLinkState.Loading)
+    val state: MutableStateFlow<ShortLinkState<Any>>
+        get() = _state
 
-    fun getMovies(): LiveData<List<Movie>> {
+    init {
         viewModelScope.launch {
-            val response = repository.loadMovies()
-            if (response.status == Status.SUCCESS){
-                viewModelScope.launch {
-                    repository.saveNewMovies(response.data?.results)
-                    repository.stopLoading()
-                }
+            handleEvents()
+        }
+    }
 
+    private suspend fun handleEvents() {
+        eventChannel.consumeAsFlow().collectLatest { event ->
+            when (event) {
+                is ShortLinkEvent.GetNewShortLinkEvent -> {
+                    repository.getNewShortLink(event.url).onEach { state ->
+                        _state.value = state
+                    }.launchIn(viewModelScope)
+                }
+                ShortLinkEvent.GetHistoryEvent -> {
+                    repository.loadSavedShortLinks().onEach { state ->
+                        _state.value = state
+                    }.launchIn(viewModelScope)
+                }
+                is ShortLinkEvent.DeleteShortLinkEvent -> {
+                    repository.deleteSavedShortLink(event.position)
+                }
             }
         }
-        return movieList
     }
 
-    fun movieItemClicked(): LiveData<Int> {
-        return  itemClicked
+    fun getHistory() {
+        eventChannel.offer(ShortLinkEvent.GetHistoryEvent)
     }
 
-    fun setItemClicked(): LiveData<Int> {
-        itemClicked.value = initialMovieId
-        return  itemClicked
+    fun createShortLink(url: String) {
+        eventChannel.offer(ShortLinkEvent.GetNewShortLinkEvent(url))
     }
 
-    fun loadMovie(movieId: Int) {
-        itemClicked.postValue(movieId)
-        repository.getMovie(movieId)
-    }
-
-    fun getIsLoading(): LiveData<Boolean> {
-        return isLoading
+    fun deleteShortLink(code: Int) {
+        eventChannel.offer(ShortLinkEvent.DeleteShortLinkEvent(code))
     }
 }
