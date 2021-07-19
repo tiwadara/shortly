@@ -1,18 +1,16 @@
 # Shortly App
 
-<img src="/readme/app.png" width="200">
+<img src="/readme/a.png" width="200">
+
+<img src="/readme/b.png" width="200">
 
 Tools to be used :
 
 ###### Unit tests ✓
-###### MVVM Architecture  ✓
+###### MVI Architecture  ✓
 ###### Clear and clean code  ✓
-###### Offline cache  ✓
+###### Offline cache using Room ✓
 ###### multi-module  ( :app & :common ) ✓
 ###### Kotlin  ✓
 ###### Dependency Injection using Hilt ✓
-###### CI  with Github Actions ✓
-###### Retrofit ✓
-###### Room  ✓
-###### Navigation Component  ✓
-###### Flow
+###### Flow ✓
