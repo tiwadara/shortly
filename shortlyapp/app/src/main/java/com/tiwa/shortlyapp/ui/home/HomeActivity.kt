@@ -82,6 +82,13 @@ class HomeActivity : AppCompatActivity() {
         viewModel.getHistory()
     }
 
+    /**
+     * This is the method for observing state changes based on User Interactions
+     *
+     * @param state Toggle the UI based on values received from the
+     * sealed class com.tiwa.common.data.state.ShortLinkState
+     */
+
     private fun handleState(state: ShortLinkState<Any>?) {
         when (state) {
             ShortLinkState.Loading -> {
@@ -105,6 +112,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * @param message is passed to show a toast message onn the UI
+     */
+
     private fun toastMessage(message: String?) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
@@ -120,6 +131,10 @@ class HomeActivity : AppCompatActivity() {
         initializeAdapter()
     }
 
+    /**
+     * This show a horizontal loader at the bottom
+     * @param show is passed to enable or disable visibility
+     */
     private fun toggleLoader(show: Boolean) {
         if (show) progress.visibility = View.VISIBLE else progress.visibility = View.GONE
     }
