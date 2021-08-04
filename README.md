@@ -5,7 +5,7 @@
 <img src="/readme/b.png" width="200">
 
 
-### Deliverables
+### Summary
     Task was clear and resource were beautifully provided and documented. I'll highlight a few of the
     APIs I used and their reasons. We can have more conversations as you'd like.
 

@@ -29,7 +29,7 @@ class HistoryViewModel @Inject constructor(private val repository: ShortLinkRepo
         eventChannel.consumeAsFlow().collectLatest { event ->
             when (event) {
                 is ShortLinkEvent.GetNewShortLinkEvent -> {
-                    repository.getNewShortLink(event.url).onEach { state ->
+                    repository.getCachedShortLink(event.url).onEach { state ->
                         _state.value = state
                     }.launchIn(viewModelScope)
                 }

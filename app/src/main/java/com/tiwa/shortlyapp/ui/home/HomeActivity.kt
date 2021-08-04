@@ -109,6 +109,10 @@ class HomeActivity : AppCompatActivity() {
                 })
 
             }
+            ShortLinkState.ShortLinkExists -> {
+                toggleLoader(false)
+                toastMessage(getString(R.string.msg_has_been_shortened))
+            }
         }
     }
 

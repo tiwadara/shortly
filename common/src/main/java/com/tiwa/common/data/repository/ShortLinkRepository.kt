@@ -5,6 +5,7 @@ import com.tiwa.common.data.state.ShortLinkState
 import kotlinx.coroutines.flow.Flow
 
 interface ShortLinkRepository {
+    suspend fun getCachedShortLink(url: String) : Flow<ShortLinkState<Any>>
     suspend fun getNewShortLink(url: String) : Flow<ShortLinkState<Any>>
     suspend fun loadSavedShortLinks(): Flow<ShortLinkState<Any>>
     suspend fun saveShortLink(shortLink: ShortLinkData)

@@ -20,7 +20,7 @@ interface ShortLinkDao {
     @Query("SELECT * FROM $SHORT_LINK_TABLE")
     fun getAllShortLinks(): Flow<List<ShortLinkData>>
 
-    @Query("SELECT * FROM $SHORT_LINK_TABLE WHERE code is :code")
-    fun getShortLinkByCode(code: String): ShortLinkData
+    @Query("SELECT * FROM $SHORT_LINK_TABLE WHERE original_link is :url")
+    fun getShortLinkByUrl(url: String): ShortLinkData?
 
 }

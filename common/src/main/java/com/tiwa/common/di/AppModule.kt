@@ -1,4 +1,4 @@
-package com.tiwa.shortlyapp.di
+package com.tiwa.common.di
 
 import android.content.Context
 import androidx.room.Room
@@ -14,6 +14,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -47,10 +48,11 @@ object AppModule {
     @Singleton
     @Provides
     fun provideDefaultShortLinkRepository(
+        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
         shortLinkDao: ShortLinkDao,
         shortLinkService: ShortLinkService,
     ): ShortLinkRepositoryImpl{
-        return ShortLinkRepositoryImpl(shortLinkDao, shortLinkService)
+        return ShortLinkRepositoryImpl(defaultDispatcher,shortLinkDao, shortLinkService)
     }
 
     @Singleton

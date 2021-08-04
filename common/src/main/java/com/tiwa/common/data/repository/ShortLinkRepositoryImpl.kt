@@ -4,13 +4,22 @@ import com.tiwa.common.data.state.ShortLinkState
 import com.tiwa.common.data.api.ShortLinkService
 import com.tiwa.common.data.dao.ShortLinkDao
 import com.tiwa.common.data.model.ShortLinkData
+import com.tiwa.common.di.DefaultDispatcher
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 
+@ExperimentalCoroutinesApi
 class ShortLinkRepositoryImpl @Inject constructor(
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
     private var shortLinkDao: ShortLinkDao,
     private val shortLinkService: ShortLinkService,) : ShortLinkRepository {
 
@@ -25,6 +34,23 @@ class ShortLinkRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             emit(ShortLinkState.Failed<String>(e.message))
         }
+    }
+
+    override suspend fun getCachedShortLink(url: String): Flow<ShortLinkState<Any>> = channelFlow {
+        send(ShortLinkState.Loading)
+        try {
+            CoroutineScope(defaultDispatcher).launch {
+                val response = shortLinkDao.getShortLinkByUrl(url)
+                response?.let {
+                    send(ShortLinkState.ShortLinkExists)
+                } ?: run {
+                    getNewShortLink(url)
+                }
+            }
+        } catch (e: Exception) {
+            send(ShortLinkState.Failed<String>(e.message))
+        }
+        awaitClose()
     }
 
     override suspend fun loadSavedShortLinks() : Flow<ShortLinkState<Any>>  =  flow {

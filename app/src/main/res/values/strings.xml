@@ -11,4 +11,5 @@
     <string name="title_link_history">Your Link History</string>
     <string name="title_shortened_url">Shortened URL</string>
     <string name="msg_url_copied">URL Copied</string>
+    <string name="msg_has_been_shortened">URL has already been shortened</string>
 </resources>
