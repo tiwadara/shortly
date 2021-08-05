@@ -29,6 +29,7 @@
 
     So , every request , goes through the getCachedShortLink(url) function , and getNewShortLink(url) is called when the exact url isn't in the records
 
+```kotlin
     override suspend fun getCachedShortLink(url: String): Flow<ShortLinkState<Any>> = channelFlow {
         send(ShortLinkState.Loading)
         try {
@@ -45,6 +46,7 @@
         }
         awaitClose()
     } 
+```
 
     ##  🚀 Room API - For data persistence
     I prefer to setup a database in projects beacause,
