@@ -73,7 +73,7 @@
     extend and could shorten test time when the project gets larger
 
     ## 🚀  MVI ( Having UI states and Events )
-   The model and the View are a given , the interesting parts are the Intents ( States and Events)
+    The model and the View are a given , the interesting parts are the Intents ( States and Events)
     It makes it easy for me to manage the UI state, as there will all ways be a state for the UI. It
     could be a loading state, a failed state, or any other state I define. This makes it easy to track errors,
     replay states,
